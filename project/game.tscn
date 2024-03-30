@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://src/script/main.gd" id="1_8bpip"]
 [ext_resource type="Texture2D" uid="uid://s4q3e56huvh" path="res://assets/images/background.png" id="2_pj2td"]
 [ext_resource type="PackedScene" uid="uid://c4mqv47p2fu1o" path="res://src/tscns/Player.tscn" id="3_13moh"]
-[ext_resource type="Texture2D" uid="uid://dtlosapnh5vdf" path="res://assets/images/gameover.png" id="4_1njdt"]
 [ext_resource type="PackedScene" uid="uid://0k4srjb78bvw" path="res://src/tscns/Button.tscn" id="5_3fq5w"]
 [ext_resource type="FontFile" uid="uid://dc2ghrqrrwd5x" path="res://font/07にくまるフォント.otf" id="5_hnj14"]
 [ext_resource type="Texture2D" uid="uid://ds5qntyy27hd0" path="res://assets/images/stop.png" id="6_7jdme"]
@@ -24,42 +23,46 @@ resource_name = "gameOverAnimation"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("GameOver:scale")
+tracks/0/path = NodePath("../UILayer/Score:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8, 1),
-"transitions": PackedFloat32Array(0.329875, 1, 1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(1.1, 1.1), Vector2(1, 1)]
+"values": [Vector2(35, 30), Vector2(35, 717)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../UILayer/Score:position")
+tracks/1/path = NodePath("../UILayer/Score:theme_override_font_sizes/font_size")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(35, 30), Vector2(35, 717)]
+"values": [25, 45]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../UILayer/Score:theme_override_font_sizes/font_size")
+tracks/2/path = NodePath("GameOverLabel:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.8, 1),
+"transitions": PackedFloat32Array(0.307786, 1, 1),
 "update": 0,
-"values": [25, 45]
+"values": [Vector2(0, 0), Vector2(1.1, 1.1), Vector2(1, 1)]
 }
+
+[sub_resource type="Animation" id="Animation_r6tmk"]
+length = 0.001
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mg4pu"]
 _data = {
+"RESET": SubResource("Animation_r6tmk"),
 "gameOverAnimation": SubResource("Animation_slcf1")
 }
 
@@ -112,13 +115,6 @@ shape = SubResource("RectangleShape2D_8y12u")
 position = Vector2(611, 143)
 
 [node name="GameOverLayer" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="GameOver" type="Sprite2D" parent="GameOverLayer"]
-z_index = 999
-position = Vector2(363, 608)
-scale = Vector2(1e-05, 1e-05)
-texture = ExtResource("4_1njdt")
 
 [node name="ColorRect" type="ColorRect" parent="GameOverLayer"]
 offset_right = 720.0
@@ -134,6 +130,30 @@ text = "TITLE"
 libraries = {
 "": SubResource("AnimationLibrary_mg4pu")
 }
+
+[node name="GameOverLabel" type="Label" parent="GameOverLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -325.0
+offset_top = -89.0
+offset_right = 326.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(324, 90)
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_hnj14")
+theme_override_font_sizes/font_size = 87
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
@@ -164,16 +184,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -325.0
-offset_top = -610.0
+offset_top = 77.0
 offset_right = 325.0
-offset_bottom = -555.0
+offset_bottom = 131.998
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("5_hnj14")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 45
 text = "SCORE: 9999"
 horizontal_alignment = 1
 vertical_alignment = 1
