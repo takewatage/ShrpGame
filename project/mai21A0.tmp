@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://csu8yj5gxhp5s"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_jo1aj"]
+[ext_resource type="Texture2D" uid="uid://blbds57igtxue" path="res://art/bg.png" id="1_xupf5"]
+[ext_resource type="PackedScene" uid="uid://bixy1la4wpodm" path="res://MarshScene/Mash0.tscn" id="2_3nhlp"]
+[ext_resource type="PackedScene" uid="uid://b1ih43fj4nh0e" path="res://MarshScene/Mash1.tscn" id="3_d60sa"]
+[ext_resource type="PackedScene" uid="uid://c4mqv47p2fu1o" path="res://Player.tscn" id="3_mepyn"]
+[ext_resource type="PackedScene" uid="uid://l56646x3aqdy" path="res://MarshScene/Mash2.tscn" id="4_llw6p"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xsem4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlcoa"]
+size = Vector2(520, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8y12u"]
+size = Vector2(56, 560)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_jo1aj")
+marsh_scene = Array[PackedScene]([ExtResource("2_3nhlp"), ExtResource("3_d60sa"), ExtResource("4_llw6p")])
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_xupf5")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("3_mepyn")]
+position = Vector2(360, 450)
+
+[node name="wall" type="RigidBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_xsem4")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="wall"]
+visible = false
+offset_left = 96.0
+offset_top = 1064.0
+offset_right = 624.0
+offset_bottom = 1104.0
+color = Color(1, 0, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall"]
+position = Vector2(364, 1084)
+shape = SubResource("RectangleShape2D_mlcoa")
+
+[node name="wall2" type="RigidBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_xsem4")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="wall2"]
+visible = false
+offset_left = 56.0
+offset_top = 528.0
+offset_right = 112.0
+offset_bottom = 1088.0
+color = Color(1, 0, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall2"]
+position = Vector2(84, 808)
+shape = SubResource("RectangleShape2D_8y12u")
+
+[node name="wall3" type="RigidBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_xsem4")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="ColorRect" type="ColorRect" parent="wall3"]
+visible = false
+offset_left = 608.0
+offset_top = 528.0
+offset_right = 664.0
+offset_bottom = 1088.0
+color = Color(1, 0, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall3"]
+position = Vector2(636, 808)
+shape = SubResource("RectangleShape2D_8y12u")
+
+[node name="SelectMash" type="Sprite2D" parent="."]
+
+[node name="NextMash" type="Sprite2D" parent="."]
+position = Vector2(105, 280)

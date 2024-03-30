@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4mqv47p2fu1o"]
+
+[ext_resource type="Script" path="res://src/script/Player.gd" id="2_r6oxq"]
+
+[node name="Player" type="Sprite2D"]
+centered = false
+script = ExtResource("2_r6oxq")
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2(-64, 11.7138)
+scale = Vector2(1, 0.671384)
+points = PackedVector2Array(64, 0, 64, 616)
+width = 3.0
+default_color = Color(1, 1, 1, 0.145098)

@@ -1,0 +1,205 @@
+[gd_scene load_steps=16 format=3 uid="uid://csu8yj5gxhp5s"]
+
+[ext_resource type="Script" path="res://src/script/main.gd" id="1_8bpip"]
+[ext_resource type="Texture2D" uid="uid://s4q3e56huvh" path="res://assets/images/background.png" id="2_pj2td"]
+[ext_resource type="PackedScene" uid="uid://c4mqv47p2fu1o" path="res://src/tscns/Player.tscn" id="3_13moh"]
+[ext_resource type="Texture2D" uid="uid://dtlosapnh5vdf" path="res://assets/images/gameover.png" id="4_1njdt"]
+[ext_resource type="PackedScene" uid="uid://0k4srjb78bvw" path="res://src/tscns/Button.tscn" id="5_3fq5w"]
+[ext_resource type="FontFile" uid="uid://dc2ghrqrrwd5x" path="res://font/07にくまるフォント.otf" id="5_hnj14"]
+[ext_resource type="Texture2D" uid="uid://ds5qntyy27hd0" path="res://assets/images/stop.png" id="6_7jdme"]
+[ext_resource type="PackedScene" uid="uid://cj2mnrlogm0se" path="res://particle/star.tscn" id="6_q6y6p"]
+[ext_resource type="PackedScene" uid="uid://di5u5hk3ma75q" path="res://src/tscns/Menu.tscn" id="8_rle5x"]
+[ext_resource type="PackedScene" uid="uid://dbnpabi1p2lwn" path="res://src/tscns/StrikeController.tscn" id="9_ss4ba"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xsem4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlcoa"]
+size = Vector2(656, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8y12u"]
+size = Vector2(10, 660)
+
+[sub_resource type="Animation" id="Animation_slcf1"]
+resource_name = "gameOverAnimation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GameOver:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1),
+"transitions": PackedFloat32Array(0.329875, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../UILayer/Score:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(35, 30), Vector2(35, 717)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../UILayer/Score:theme_override_font_sizes/font_size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [25, 45]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mg4pu"]
+_data = {
+"gameOverAnimation": SubResource("Animation_slcf1")
+}
+
+[node name="Main" type="Node"]
+script = ExtResource("1_8bpip")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_pj2td")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("3_13moh")]
+position = Vector2(360, 286)
+
+[node name="WallLayer" type="CanvasLayer" parent="."]
+
+[node name="wall_bottom" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
+position = Vector2(0, 103)
+physics_material_override = SubResource("PhysicsMaterial_xsem4")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_bottom"]
+position = Vector2(360, 1083)
+shape = SubResource("RectangleShape2D_mlcoa")
+
+[node name="wall_left" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
+physics_material_override = SubResource("PhysicsMaterial_xsem4")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_left"]
+position = Vector2(35, 861)
+shape = SubResource("RectangleShape2D_8y12u")
+
+[node name="wall_right" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
+position = Vector2(48, 0)
+physics_material_override = SubResource("PhysicsMaterial_xsem4")
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_right"]
+position = Vector2(637, 861)
+shape = SubResource("RectangleShape2D_8y12u")
+
+[node name="SelectItem" type="Sprite2D" parent="."]
+
+[node name="NextItem" type="Sprite2D" parent="."]
+position = Vector2(611, 143)
+
+[node name="GameOverLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="GameOver" type="Sprite2D" parent="GameOverLayer"]
+z_index = 999
+position = Vector2(363, 608)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("4_1njdt")
+
+[node name="ColorRect" type="ColorRect" parent="GameOverLayer"]
+offset_right = 720.0
+offset_bottom = 1280.0
+color = Color(0, 0, 0, 0.486275)
+
+[node name="TitleButton" parent="GameOverLayer" instance=ExtResource("5_3fq5w")]
+offset_top = 274.0
+offset_bottom = 274.0
+text = "TITLE"
+
+[node name="Anim" type="AnimationPlayer" parent="GameOverLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_mg4pu")
+}
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="HiScore" type="Label" parent="UILayer"]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -336.0
+offset_top = 115.0
+offset_right = -31.0
+offset_bottom = 183.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_hnj14")
+theme_override_font_sizes/font_size = 50
+text = "Hiscore: 0000"
+horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Score" type="Label" parent="UILayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -325.0
+offset_top = -610.0
+offset_right = 325.0
+offset_bottom = -555.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_hnj14")
+theme_override_font_sizes/font_size = 25
+text = "SCORE: 9999"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="PoseBtn" type="Button" parent="UILayer"]
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 116.0
+offset_bottom = 115.0
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+icon = ExtResource("6_7jdme")
+
+[node name="ItemLayer" type="CanvasLayer" parent="."]
+
+[node name="Particles_star" parent="." instance=ExtResource("6_q6y6p")]
+
+[node name="StrikeController" parent="." instance=ExtResource("9_ss4ba")]
+metadata/_edit_lock_ = true
+
+[node name="Menu" parent="." instance=ExtResource("8_rle5x")]
+visible = false
+
+[connection signal="button_pressed" from="GameOverLayer/TitleButton" to="." method="_on_title_button_button_pressed"]
+[connection signal="pressed" from="UILayer/PoseBtn" to="." method="_on_pose_btn_pressed"]
+[connection signal="visibility_changed" from="ItemLayer" to="." method="_on_item_layer_visibility_changed"]
+[connection signal="shot" from="StrikeController" to="." method="_on_strike_controller_shot"]

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbv5jc2p3cykv"]
+
+[ext_resource type="PackedScene" uid="uid://dy3pveyuudrbj" path="res://src/items/Item.tscn" id="1_brr2j"]
+[ext_resource type="Texture2D" uid="uid://b77khpgn2k1ye" path="res://assets/images/items/item7.png" id="2_emrcg"]
+
+[node name="laravel" instance=ExtResource("1_brr2j")]
+id = 6
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_emrcg")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(-2, -6)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="2"]
+polygon = PackedVector2Array(-41, -70, -52, -68, -63, -62, -70, -53, -70, 42, -65, 50, -58, 57, -48, 64, -36, 70, -27, 74, -15, 75, -8, 75, 6, 74, 20, 69, 30, 62, 41, 52, 46, 40, 52, 15, 65, 6, 75, -6, 74, -40, 68, -49, 58, -56, 44, -57, 28, -53, 16, -45, 11, -26, 13, -7, -10, 7, -11, -53, -17, -62, -26, -68)

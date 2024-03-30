@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://di5u5hk3ma75q"]
+
+[ext_resource type="Texture2D" uid="uid://cqy5ykdsxko5n" path="res://assets/images/menu2.png" id="1_djoy1"]
+[ext_resource type="Script" path="res://src/script/Menu.gd" id="1_shsnp"]
+[ext_resource type="PackedScene" uid="uid://0k4srjb78bvw" path="res://src/tscns/Button.tscn" id="4_pcwp7"]
+
+[node name="Menu" type="Control"]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_shsnp")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 720.0
+offset_bottom = 1280.0
+color = Color(0, 0, 0, 1)
+
+[node name="Menu2" type="Sprite2D" parent="."]
+position = Vector2(360.5, 640)
+texture = ExtResource("1_djoy1")
+
+[node name="Label" type="Label" parent="Menu2"]
+offset_left = -114.5
+offset_top = -350.0
+offset_right = 92.5
+offset_bottom = -266.0
+theme_override_font_sizes/font_size = 61
+text = "MENU"
+horizontal_alignment = 1
+
+[node name="PlayBtn" parent="." instance=ExtResource("4_pcwp7")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.524219
+anchor_bottom = 0.524219
+
+[node name="ReStartBtn" parent="." instance=ExtResource("4_pcwp7")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.63125
+anchor_bottom = 0.63125
+offset_right = -3.05176e-05
+text = "TITLE"
+
+[connection signal="button_pressed" from="PlayBtn" to="." method="_on_play_btn_button_pressed"]
+[connection signal="button_pressed" from="ReStartBtn" to="." method="_on_re_start_btn_button_pressed"]

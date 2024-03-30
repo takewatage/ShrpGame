@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://64t4xl88t2ha"]
+
+[ext_resource type="PackedScene" uid="uid://dy3pveyuudrbj" path="res://src/items/Item.tscn" id="1_cklaf"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_scwcm"]
+load_path = "res://.godot/imported/item8.png-d0b84e3cee708c6d1f69a1bd75f9a639.ctex"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mcs5c"]
+radius = 80.0062
+
+[node name="reactnative" instance=ExtResource("1_cklaf")]
+id = 7
+
+[node name="Sprite2D" parent="." index="0"]
+texture = SubResource("CompressedTexture2D_scwcm")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_mcs5c")

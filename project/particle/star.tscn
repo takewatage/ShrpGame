@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cj2mnrlogm0se"]
+
+[ext_resource type="Texture2D" uid="uid://c5tnvigrdey0e" path="res://particle/symbol_02.png" id="1_nu3vc"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5chkg"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_x8qib"]
+_data = [Vector2(0, 0.547368), 0.0, 0.0, 0, 0, Vector2(0.497462, 0.263158), -1.68589, -1.68589, 0, 0, Vector2(1, 0.0421052), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Particles_star" type="CPUParticles2D"]
+material = SubResource("CanvasItemMaterial_5chkg")
+emitting = false
+amount = 10
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("1_nu3vc")
+spread = 180.0
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+angular_velocity_min = 100.0
+angular_velocity_max = 100.0
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_x8qib")
+color = Color(1, 1, 0.337255, 1)

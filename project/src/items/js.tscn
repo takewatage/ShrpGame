@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bea61u63t1sx2"]
+
+[ext_resource type="PackedScene" uid="uid://dy3pveyuudrbj" path="res://src/items/Item.tscn" id="1_e0fy0"]
+[ext_resource type="Texture2D" uid="uid://btnnaclprvg8k" path="res://assets/images/items/item2.png" id="2_kuuoi"]
+
+[node name="js" instance=ExtResource("1_e0fy0")]
+id = 1
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_kuuoi")
+
+[node name="CollisionShape2D" parent="." index="1"]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="2"]
+polygon = PackedVector2Array(0, 28, 19, 21, 24, -28, -24, -28, -19, 21)

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy3pveyuudrbj"]
+
+[ext_resource type="Script" path="res://src/items/Item.gd" id="1_ti4hu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v3c25"]
+friction = 0.4
+bounce = 0.2
+
+[node name="RigidBody2D" type="RigidBody2D" groups=["items"]]
+physics_material_override = SubResource("PhysicsMaterial_v3c25")
+max_contacts_reported = 5
+contact_monitor = true
+script = ExtResource("1_ti4hu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

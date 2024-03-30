@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://lsqryi7hjkwy"]
+
+[ext_resource type="PackedScene" uid="uid://dy3pveyuudrbj" path="res://src/items/Item.tscn" id="1_frnds"]
+[ext_resource type="Texture2D" uid="uid://cfbcl2tb16135" path="res://assets/images/items/item3.png" id="2_12bls"]
+
+[node name="vue" instance=ExtResource("1_frnds")]
+id = 2
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_12bls")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(72, 72)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="2"]
+position = Vector2(0, 4)
+polygon = PackedVector2Array(32, -29, 0, 25, -32, -29)

@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://dgu776bh20mxf"]
+
+[ext_resource type="Script" path="res://src/script/StrikeTest.gd" id="1_smdth"]
+[ext_resource type="PackedScene" uid="uid://dbnpabi1p2lwn" path="res://src/tscns/StrikeController.tscn" id="3_8fkbt"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mju0j"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_oyxuo"]
+a = Vector2(363, 95)
+b = Vector2(-357, 95)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_36s6i"]
+a = Vector2(-35, -861)
+b = Vector2(-35, 419)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ltlmd"]
+a = Vector2(35, -861)
+b = Vector2(35, 419)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_vvavh"]
+a = Vector2(359, -1288)
+b = Vector2(-361, -1288)
+
+[node name="StrikeTest" type="Node2D" groups=["strikes"]]
+script = ExtResource("1_smdth")
+
+[node name="WallLayer" type="CanvasLayer" parent="."]
+
+[node name="wall_bottom" type="RigidBody2D" parent="WallLayer"]
+position = Vector2(0, 103)
+physics_material_override = SubResource("PhysicsMaterial_mju0j")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_bottom"]
+position = Vector2(357, 1082)
+shape = SubResource("SegmentShape2D_oyxuo")
+
+[node name="wall_left" type="RigidBody2D" parent="WallLayer"]
+physics_material_override = SubResource("PhysicsMaterial_mju0j")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_left"]
+position = Vector2(35, 861)
+shape = SubResource("SegmentShape2D_36s6i")
+
+[node name="wall_right" type="RigidBody2D" parent="WallLayer"]
+position = Vector2(48, 0)
+physics_material_override = SubResource("PhysicsMaterial_mju0j")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_right"]
+position = Vector2(637, 861)
+shape = SubResource("SegmentShape2D_ltlmd")
+
+[node name="wall_top" type="RigidBody2D" parent="WallLayer"]
+position = Vector2(0, 206)
+physics_material_override = SubResource("PhysicsMaterial_mju0j")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_top"]
+position = Vector2(361, 1082)
+shape = SubResource("SegmentShape2D_vvavh")
+
+[node name="SetButton" type="Button" parent="."]
+offset_left = 64.0
+offset_right = 128.0
+offset_bottom = 64.0
+text = "set"
+
+[node name="SetButton2" type="Button" parent="."]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 128.0
+offset_bottom = 128.0
+text = "set"
+
+[node name="StrikeArea2D" parent="." instance=ExtResource("3_8fkbt")]
+STRIKE_FORCE = 5000
+metadata/_edit_lock_ = true
+
+[connection signal="pressed" from="SetButton" to="." method="_on_set_button_pressed"]
+[connection signal="pressed" from="SetButton2" to="." method="_on_set_button_2_pressed"]
+[connection signal="shot" from="StrikeArea2D" to="." method="_on_strike_area_2d_shot"]

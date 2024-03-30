@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbnpabi1p2lwn"]
+
+[ext_resource type="Script" path="res://src/script/StrikeController.gd" id="1_41b4b"]
+[ext_resource type="Texture2D" uid="uid://31m4cycppgih" path="res://assets/images/game_arrow.png" id="2_y02if"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b66ud"]
+size = Vector2(720, 1280)
+
+[node name="StrikeController" type="Area2D"]
+script = ExtResource("1_41b4b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(360, 640)
+shape = SubResource("RectangleShape2D_b66ud")
+debug_color = Color(0, 0.6, 0.701961, 0.0392157)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Arrow" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+position = Vector2(360, 640)
+texture = ExtResource("2_y02if")

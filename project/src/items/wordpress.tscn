@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cj7shs2agplyr"]
+
+[ext_resource type="PackedScene" uid="uid://dy3pveyuudrbj" path="res://src/items/Item.tscn" id="1_lawl0"]
+[ext_resource type="Texture2D" uid="uid://dt442rqubcdyo" path="res://assets/images/items/item1.png" id="2_x678w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ss5h5"]
+radius = 25.0
+
+[node name="wordpress" instance=ExtResource("1_lawl0")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_x678w")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_ss5h5")
