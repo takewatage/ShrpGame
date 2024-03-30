@@ -108,7 +108,7 @@ func end_drag(position):
 
 ## 位置が距離範囲よりも小さいか
 # param threshold 距離範囲
-func isClose(position1: Vector2, position2: Vector2, threshold: float = 20.0) -> bool:
+func isClose(position1: Vector2, position2: Vector2, threshold: float = 30.0) -> bool:
 	return position1.distance_to(position2) <= threshold
 	
 func setControll(value: bool) -> void:
