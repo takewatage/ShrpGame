@@ -58,8 +58,6 @@ func setup(layers) -> void:
 ## @param is_deferred 遅延生成するかどうか.
 ## particle_pos: スコアパーティクルを生成するときの座標
 func createItem(id:Item.eItem , is_deferred:bool=false, particle_pos:Vector2=Vector2.ZERO) -> Item:
-	print('create_item')
-	print(is_deferred)
 
 	# PackedSceneを取得.
 	var packed = ITEM_TBL[id]

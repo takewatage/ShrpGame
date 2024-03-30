@@ -5,10 +5,10 @@ extends Node
 # -----------------------------------------------
 ## 抽選用テーブル
 const NEXT_ITEMS_TABLE = [
-	Item.eItem.WORDPRESS,
-	Item.eItem.JS,
+	#Item.eItem.WORDPRESS,
+	#Item.eItem.JS,
 	Item.eItem.VUE,
-	Item.eItem.FIGMA,
+	#Item.eItem.FIGMA,
 ]
 
 # -----------------------------------------------
@@ -39,6 +39,7 @@ func _ready():
 	}
 	# セットアップ.
 	Common.setup(layers)
+	$BGM.play()
 	
 	change_image()
 
@@ -74,8 +75,6 @@ func change_image():
 	now_item_id = next_item_id
 	next_item_id = NEXT_ITEMS_TABLE.pick_random()
 	
-	print(now_item_id)
-	print(Item.TEXTURES[now_item_id])
 	$SelectItem.show()
 	
 	var texture = load(Item.TEXTURES[now_item_id])
@@ -99,6 +98,7 @@ func gameOver():
 	$GameOverLayer.show()
 	$GameOverLayer/Anim.play("gameOverAnimation")
 	$UILayer/PoseBtn.hide()
+	$StrikeController.setControll(false)
 	# アイテムを全部落とす
 	get_tree().call_group("items", "jumpOut")
 
@@ -106,7 +106,7 @@ func gameOver():
 func _on_pose_btn_pressed():
 	Common.gamePose()
 	$Menu.show()
-
+	$Menu.setVolume($BGM.volume_db)
 
 func _on_strike_controller_shot(force) -> void:
 	var dropItem = Common.ITEM_TBL[now_item_id].instantiate()
@@ -123,3 +123,8 @@ func _on_strike_controller_shot(force) -> void:
 ## タイトルに戻る
 func _on_title_button_button_pressed():
 	Common.goto_scene("res://src/tscns/Title.tscn")
+	
+	
+func setVolume(_vol):
+	$BGM.volume_db = _vol
+	

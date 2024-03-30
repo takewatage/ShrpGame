@@ -129,19 +129,13 @@ func grandCommand() -> void:
 	#print($CollisionShape2D.disabled)
 	pass
 	
-	#print('大号令')
-	#apply_central_impulse(Vector2(0, 10000))
-	#apply_torque_impulse(30000)
-	
 # クリア後の挙動
 func jumpOut() -> void:
-	print("jumpOut----")
 	var bottol_center = Vector2(360, 640)
 	var force_direction = (position - bottol_center).normalized()
 	
 	var shot_speed = 250.0
 	var shot_force = shot_speed * force_direction
-	
 
 	for child in Common.getLayer('wall').get_children():
 		if child.is_class("RigidBody2D"):
@@ -150,8 +144,6 @@ func jumpOut() -> void:
 				collision_shape.set_deferred('disabled', true)
 				
 	apply_central_impulse(shot_force)
-
-	#$CollisionShape2D.set_deferred('disabled', true)
 	
 	
 	

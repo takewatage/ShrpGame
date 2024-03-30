@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://csu8yj5gxhp5s"]
+[gd_scene load_steps=17 format=3 uid="uid://csu8yj5gxhp5s"]
 
 [ext_resource type="Script" path="res://src/script/main.gd" id="1_8bpip"]
-[ext_resource type="Texture2D" uid="uid://s4q3e56huvh" path="res://assets/images/background.png" id="2_pj2td"]
+[ext_resource type="Texture2D" uid="uid://buyi4726fn4ns" path="res://assets/images/background.png" id="2_pj2td"]
 [ext_resource type="PackedScene" uid="uid://c4mqv47p2fu1o" path="res://src/tscns/Player.tscn" id="3_13moh"]
 [ext_resource type="PackedScene" uid="uid://0k4srjb78bvw" path="res://src/tscns/Button.tscn" id="5_3fq5w"]
 [ext_resource type="FontFile" uid="uid://dc2ghrqrrwd5x" path="res://font/07にくまるフォント.otf" id="5_hnj14"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cj2mnrlogm0se" path="res://particle/star.tscn" id="6_q6y6p"]
 [ext_resource type="PackedScene" uid="uid://di5u5hk3ma75q" path="res://src/tscns/Menu.tscn" id="8_rle5x"]
 [ext_resource type="PackedScene" uid="uid://dbnpabi1p2lwn" path="res://src/tscns/StrikeController.tscn" id="9_ss4ba"]
+[ext_resource type="AudioStream" uid="uid://ckccu2r2tftjm" path="res://assets/sound/Dear.mp3" id="10_5cfa5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xsem4"]
 
@@ -17,6 +18,9 @@ size = Vector2(656, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8y12u"]
 size = Vector2(10, 660)
+
+[sub_resource type="Animation" id="Animation_r6tmk"]
+length = 0.001
 
 [sub_resource type="Animation" id="Animation_slcf1"]
 resource_name = "gameOverAnimation"
@@ -57,9 +61,6 @@ tracks/2/keys = {
 "values": [Vector2(0, 0), Vector2(1.1, 1.1), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_r6tmk"]
-length = 0.001
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mg4pu"]
 _data = {
 "RESET": SubResource("Animation_r6tmk"),
@@ -82,13 +83,12 @@ position = Vector2(360, 286)
 [node name="WallLayer" type="CanvasLayer" parent="."]
 
 [node name="wall_bottom" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
-position = Vector2(0, 103)
+position = Vector2(363, 1186)
 physics_material_override = SubResource("PhysicsMaterial_xsem4")
 freeze = true
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_bottom"]
-position = Vector2(360, 1083)
 shape = SubResource("RectangleShape2D_mlcoa")
 
 [node name="wall_left" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
@@ -109,12 +109,8 @@ freeze = true
 position = Vector2(637, 861)
 shape = SubResource("RectangleShape2D_8y12u")
 
-[node name="SelectItem" type="Sprite2D" parent="."]
-
-[node name="NextItem" type="Sprite2D" parent="."]
-position = Vector2(611, 143)
-
 [node name="GameOverLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="GameOverLayer"]
 offset_right = 720.0
@@ -143,6 +139,7 @@ offset_right = 326.0
 offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
 pivot_offset = Vector2(324, 90)
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -178,22 +175,15 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Score" type="Label" parent="UILayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -325.0
-offset_top = 77.0
-offset_right = 325.0
-offset_bottom = 131.998
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 48.0
+offset_top = 7.0
+offset_right = 698.0
+offset_bottom = 74.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("5_hnj14")
-theme_override_font_sizes/font_size = 45
+theme_override_font_sizes/font_size = 25
 text = "SCORE: 9999"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -208,6 +198,120 @@ scale = Vector2(0.5, 0.5)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
 icon = ExtResource("6_7jdme")
+metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 56.0
+offset_top = 128.0
+offset_right = 96.0
+offset_bottom = 168.0
+size_flags_horizontal = 4
+metadata/_edit_lock_ = true
+
+[node name="N" type="Label" parent="UILayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = 20.0
+offset_right = -36.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.413643
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_hnj14")
+theme_override_font_sizes/font_size = 25
+text = "N"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="E" type="Label" parent="UILayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.18326
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_hnj14")
+theme_override_font_sizes/font_size = 25
+text = "E"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="X" type="Label" parent="UILayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_right = 36.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.230383
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_hnj14")
+theme_override_font_sizes/font_size = 25
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="T" type="Label" parent="UILayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 56.0
+offset_top = 12.0
+offset_right = 80.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.551524
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("5_hnj14")
+theme_override_font_sizes/font_size = 25
+text = "T"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectItem" type="Sprite2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="NextItem" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(86, 232)
+metadata/_edit_lock_ = true
 
 [node name="ItemLayer" type="CanvasLayer" parent="."]
 
@@ -218,6 +322,10 @@ metadata/_edit_lock_ = true
 
 [node name="Menu" parent="." instance=ExtResource("8_rle5x")]
 visible = false
+z_index = 1
+
+[node name="BGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_5cfa5")
 
 [connection signal="button_pressed" from="GameOverLayer/TitleButton" to="." method="_on_title_button_button_pressed"]
 [connection signal="pressed" from="UILayer/PoseBtn" to="." method="_on_pose_btn_pressed"]

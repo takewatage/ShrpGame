@@ -71,4 +71,3 @@ func _on_strike_area_2d_shot(force):
 func _on_set_button_2_pressed():
 	is_grond = !is_grond
 	var objects_in_group = get_tree().get_nodes_in_group("strikes")
-	print(objects_in_group)

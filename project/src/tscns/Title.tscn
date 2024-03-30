@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://1a4w4qf7x50p"]
+[gd_scene load_steps=8 format=3 uid="uid://1a4w4qf7x50p"]
 
 [ext_resource type="Script" path="res://src/script/Title.gd" id="1_jw6yu"]
 [ext_resource type="Texture2D" uid="uid://dbsfvh2rhj35t" path="res://assets/images/items/item10.png" id="2_pbsvv"]
 [ext_resource type="FontFile" uid="uid://dc2ghrqrrwd5x" path="res://font/07にくまるフォント.otf" id="3_50ryc"]
 [ext_resource type="Texture2D" uid="uid://cvp2quxfsa7uh" path="res://assets/images/button.png" id="4_gssc1"]
+[ext_resource type="AudioStream" uid="uid://cc4ofk5x3ylpm" path="res://assets/sound/enter.mp3" id="5_t0fi6"]
 
 [sub_resource type="Animation" id="Animation_3r5wp"]
 resource_name = "on_button"
@@ -101,5 +102,8 @@ metadata/_edit_use_anchors_ = true
 libraries = {
 "": SubResource("AnimationLibrary_qiw7d")
 }
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_t0fi6")
 
 [connection signal="pressed" from="Control/TextureButton" to="." method="_on_texture_button_pressed"]

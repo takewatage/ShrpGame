@@ -6,8 +6,8 @@
 blend_mode = 1
 
 [sub_resource type="Curve" id="Curve_x8qib"]
-_data = [Vector2(0, 0.547368), 0.0, 0.0, 0, 0, Vector2(0.497462, 0.263158), -1.68589, -1.68589, 0, 0, Vector2(1, 0.0421052), 0.0, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, 0.547368), 0.0, 0.0, 0, 0, Vector2(0.25, 0.44268), 0.0, 0.0, 0, 0, Vector2(0.497462, 0.263158), -1.68589, -1.68589, 0, 0, Vector2(1, 0.0421052), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [node name="Particles_star" type="CPUParticles2D"]
 material = SubResource("CanvasItemMaterial_5chkg")

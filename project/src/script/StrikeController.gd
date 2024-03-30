@@ -56,24 +56,25 @@ func _input(event):
 			dragging(event.global_position)	
 
 # ドラッグ開始
-func start_drag(position):
-	drag_start_position = position
+## value Vector2()
+func start_drag(_position):
+	drag_start_position = _position
 	arrow.set_position(target_vector)
 	arrow.show()
 	arrow.scale.y = 0
 	
 # ドラッグ中
-func dragging(position):
+func dragging(_position):
 	
 	## 開始位置に戻したら矢印を消す
-	if isClose(position, drag_start_position):
+	if isClose(_position, drag_start_position):
 		arrow.hide()
 	else:
 		arrow.show()
 	
 	# ドラッグした方向と距離取得
-	var drag_vector = (position - drag_start_position)
-	var drag_distance = position.distance_to(drag_start_position)
+	var drag_vector = (_position - drag_start_position)
+	var drag_distance = _position.distance_to(drag_start_position)
 	
 	# 矢印から引っ張ったと仮定した座標を求める
 	var dragging_position = arrow.position - drag_vector * drag_distance
@@ -85,12 +86,12 @@ func dragging(position):
 	
 	
 #ドラッグ終了
-func end_drag(position):
-	var drag_end_position = position
+func end_drag(_position):
+	var drag_end_position = _position
 	arrow.hide()
 	
 	# 矢印を元に戻したら何もしない
-	if isClose(position, drag_start_position):
+	if isClose(_position, drag_start_position):
 		return
 		
 	# 離したした方向と距離計算
