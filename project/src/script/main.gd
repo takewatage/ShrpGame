@@ -5,10 +5,10 @@ extends Node
 # -----------------------------------------------
 ## 抽選用テーブル
 const NEXT_ITEMS_TABLE = [
-	#Item.eItem.WORDPRESS,
-	#Item.eItem.JS,
+	Item.eItem.WORDPRESS,
+	Item.eItem.JS,
 	Item.eItem.VUE,
-	#Item.eItem.FIGMA,
+	Item.eItem.FIGMA,
 ]
 
 # -----------------------------------------------
