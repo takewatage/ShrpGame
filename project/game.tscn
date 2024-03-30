@@ -331,3 +331,4 @@ stream = ExtResource("10_5cfa5")
 [connection signal="pressed" from="UILayer/PoseBtn" to="." method="_on_pose_btn_pressed"]
 [connection signal="visibility_changed" from="ItemLayer" to="." method="_on_item_layer_visibility_changed"]
 [connection signal="shot" from="StrikeController" to="." method="_on_strike_controller_shot"]
+[connection signal="playStart" from="Menu" to="." method="_on_menu_play_start"]

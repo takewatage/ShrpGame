@@ -106,7 +106,13 @@ func gameOver():
 func _on_pose_btn_pressed():
 	Common.gamePose()
 	$Menu.show()
+	$ItemLayer.hide()
 	$Menu.setVolume($BGM.volume_db)
+	
+# ポーズ後の開始
+func _on_menu_play_start():
+	$ItemLayer.show()
+
 
 func _on_strike_controller_shot(force) -> void:
 	var dropItem = Common.ITEM_TBL[now_item_id].instantiate()
