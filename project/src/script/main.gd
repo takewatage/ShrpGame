@@ -40,6 +40,7 @@ func _ready():
 	# セットアップ.
 	Common.setup(layers)
 	$BGM.play()
+	$BGM.volume_db = Save.getSaveData('setting_volume')
 	
 	change_image()
 
@@ -118,10 +119,10 @@ func _on_pose_btn_pressed():
 	Common.gamePose()
 	$Menu.show()
 	$ItemLayer.hide()
-	$Menu.setVolume($BGM.volume_db)
 	
 # ポーズ後の開始
 func _on_menu_play_start():
+	$BGM.set_deferred('volume_db', Save.getSaveData("setting_volume"))
 	$ItemLayer.show()
 
 
@@ -140,8 +141,3 @@ func _on_strike_controller_shot(force) -> void:
 ## タイトルに戻る
 func _on_title_button_button_pressed():
 	Common.goto_scene("res://src/tscns/Title.tscn")
-	
-	
-func setVolume(_vol):
-	$BGM.volume_db = _vol
-	

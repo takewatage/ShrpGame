@@ -19,6 +19,7 @@ config/icon="res://shrpIcon.svg"
 [autoload]
 
 Common="*res://src/script/Common.gd"
+Save="*res://src/script/global/Save.gd"
 
 [display]
 
