@@ -53,15 +53,10 @@ const TEXTURES = {
 ## スコア
 @export var score:int
 
-@export var nextItem: PackedScene
-
-var is_check = false  # 判定中のフラグ
-var has_exited_viewport = false # 画面内にあるか
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(NAMES[id])
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -70,21 +65,12 @@ func _process(_delta):
 	if Input.is_action_just_pressed("gran_command"):
 		grandCommand()
 		
-	
-	if !has_exited_viewport and isOffScreen():
-		has_exited_viewport = true
-		print("画面外")
-		get_parent().call_deferred("gameOver")
+	# 画面外に出た時
+	if isOffScreen():
+		var current_scene = get_tree().get_current_scene()
+		current_scene.call_deferred("gameOver")
 		queue_free()
 	
-
-# 判定中か	
-func isChecked():
-	return is_check
-	
-# 判定開始
-func setCheked():
-	is_check = true
 
 ## 当たった時
 func _on_body_entered(body: Node) -> void:
@@ -105,12 +91,19 @@ func _on_body_entered(body: Node) -> void:
 		
 	# IDが一致していたら合成可能.
 	if id < eItem.SHRP:
-		# 中間地点
+		# 中間地点取得
 		var pos = (position + other.position) / 2
-		var is_deferred = true
-		var item = Common.createItem(id + 1, is_deferred, pos)
+		var item = await Common.createItem(id + 1, pos)
 		item.position = pos
-		get_parent().call_deferred("popPartical", pos)
+		
+		var _se = Common.eSe.MARGE
+		#shrpを作ったら特殊SE
+		if eItem.SHRP == item.id:
+			_se = Common.eSe.MAKE_SHRP
+			
+		var current_scene = get_tree().get_current_scene()
+		Common.playSE(_se)
+		current_scene.call_deferred("popPartical", pos)
 	else:
 		return
 		
@@ -145,9 +138,5 @@ func jumpOut() -> void:
 				
 	apply_central_impulse(shot_force)
 	
-	
-	
-
-
 
 

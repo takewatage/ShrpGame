@@ -67,7 +67,7 @@ func _process(delta):
 	
 func drop():
 	var dropItem = Common.ITEM_TBL[now_item_id].instantiate()
-	add_child(dropItem)
+	_item_layer.add_child(dropItem)
 	dropItem.position = $SelectItem.position
 	$SelectItem.hide()
 
@@ -82,6 +82,7 @@ func change_image():
 	$SelectItem.set_texture(texture)
 	$NextItem.set_texture(nextTexture)
 	
+# UI更新
 func updateUi(_delta:float) -> void:
 	# スコア更新.
 	_ui_score.text = "SCORE: %d"%Common.score
@@ -91,16 +92,26 @@ func updateUi(_delta:float) -> void:
 func popPartical(pos) -> void:
 	$Particles_star.position = pos
 	$Particles_star.set_deferred("emitting", true)
+
+# システム音
+func playSE(_sound) -> void:
+	print("ぽん！！！")
+	$SE.stop()
+	$SE.stream = _sound
+	$SE.play()
 	
 # ゲームオーバー処理
 func gameOver():
-	$SelectItem.hide()
-	$GameOverLayer.show()
-	$GameOverLayer/Anim.play("gameOverAnimation")
-	$UILayer/PoseBtn.hide()
-	$StrikeController.setControll(false)
-	# アイテムを全部落とす
-	get_tree().call_group("items", "jumpOut")
+	if Common.game_status != Common.GAME_STATUS.GAME_OVER:
+		print('gameOver')
+		Common.game_status = Common.GAME_STATUS.GAME_OVER
+		$SelectItem.hide()
+		$GameOverLayer.show()
+		$GameOverLayer/Anim.play("gameOverAnimation")
+		$UILayer/PoseBtn.hide()
+		$StrikeController.setControll(false)
+		# アイテムを全部落とす
+		get_tree().call_group("items", "jumpOut")
 
 # ポーズ
 func _on_pose_btn_pressed():

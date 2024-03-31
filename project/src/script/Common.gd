@@ -9,6 +9,20 @@ extends Node
 # ===============================================
 const TIMER_ITEM_APPEAR = 1.0
 
+# ===============================================
+# enum
+# ===============================================
+enum eSe {
+	MARGE,
+	MAKE_SHRP
+}
+
+enum GAME_STATUS {
+	GAME_OVER,
+	GAME_PLAYING,
+	GAME_STOP,
+}
+
 # -----------------------------------------------
 # preload.
 # -----------------------------------------------
@@ -26,9 +40,17 @@ const ITEM_TBL = {
 	Item.eItem.SHRP: preload("res://src/items/shrp.tscn"),
 }
 
+## SEテーブル
+const SE_TBL = {
+	eSe.MARGE: preload("res://assets/sound/marge.mp3"),
+	eSe.MAKE_SHRP: preload("res://assets/sound/kirarin.mp3"),
+}
+
 # -----------------------------------------------
 # var.
 # -----------------------------------------------
+var game_status: GAME_STATUS
+	
 ## CanvasLayer.
 var _layers = {}
 ## スコア.
@@ -54,25 +76,22 @@ func setup(layers) -> void:
 	# スコア初期化.
 	score = 0
 	_layers = layers
+	game_status = GAME_STATUS.GAME_PLAYING
 	
-## @param is_deferred 遅延生成するかどうか.
 ## particle_pos: スコアパーティクルを生成するときの座標
-func createItem(id:Item.eItem , is_deferred:bool=false, particle_pos:Vector2=Vector2.ZERO) -> Item:
+func createItem(id:Item.eItem, particle_pos:Vector2=Vector2.ZERO) -> Item:
 
 	# PackedSceneを取得.
 	var packed = ITEM_TBL[id]
 	var item = packed.instantiate()
 	var layer = getLayer("item")
-	if is_deferred:
-		layer.call_deferred("add_child", item)
-		# スコア加算.
-		var _score = addScore(id)
-		# スコア演出生成.
-		#ParticleUtil.add_score(particle_pos, score)
-		# 表示用加算スコア.
-		disp_add_score += _score
-	else:
-		layer.add_child(item)
+	layer.call_deferred("add_child", item)
+	# スコア加算.
+	var _score = addScore(id)
+	# スコア演出生成.
+	#ParticleUtil.add_score(particle_pos, score)
+	# 表示用加算スコア.
+	disp_add_score += _score
 	
 	return item
 
@@ -102,6 +121,7 @@ func disableAllChildren():
 	
 ## ポーズ
 func gamePose():
+	game_status = GAME_STATUS.GAME_STOP
 	var tree = get_tree()
 	if tree:
 		# ポーズ開始。ゲームを止める
@@ -109,7 +129,17 @@ func gamePose():
 	
 ## ポーズ解除
 func gameResume():
+	game_status = GAME_STATUS.GAME_PLAYING
 	var tree = get_tree()
 	if tree:
 		# ポーズ解除
 		tree.paused = false
+		
+		
+func playSE(idx: int) -> void:
+	if SE_TBL[idx]:
+		var current_scene = get_tree().get_current_scene()
+		# メインシーンにplaySe()があるか
+		if current_scene.has_method("playSE"):
+			current_scene.playSE(SE_TBL[idx])
+	
