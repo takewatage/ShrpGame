@@ -93,7 +93,7 @@ func _on_body_entered(body: Node) -> void:
 	if id < eItem.SHRP:
 		# 中間地点取得
 		var pos = (position + other.position) / 2
-		var item = await Common.createItem(id + 1, pos)
+		var item = Common.createItem(id + 1, pos)
 		item.position = pos
 		
 		var _se = Common.eSe.MARGE
@@ -119,7 +119,6 @@ func isOffScreen() -> bool:
 
 # 大号令
 func grandCommand() -> void: 
-	#print($CollisionShape2D.disabled)
 	pass
 	
 # クリア後の挙動

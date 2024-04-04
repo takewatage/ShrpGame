@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://1a4w4qf7x50p"]
+[gd_scene load_steps=10 format=3 uid="uid://1a4w4qf7x50p"]
 
 [ext_resource type="Script" path="res://src/script/Title.gd" id="1_jw6yu"]
 [ext_resource type="Texture2D" uid="uid://dbsfvh2rhj35t" path="res://assets/images/items/item10.png" id="2_pbsvv"]
 [ext_resource type="FontFile" uid="uid://dc2ghrqrrwd5x" path="res://font/07にくまるフォント.otf" id="3_50ryc"]
 [ext_resource type="Texture2D" uid="uid://cvp2quxfsa7uh" path="res://assets/images/button.png" id="4_gssc1"]
-[ext_resource type="AudioStream" uid="uid://cc4ofk5x3ylpm" path="res://assets/sound/enter.mp3" id="5_t0fi6"]
+[ext_resource type="AudioStream" uid="uid://cc4ofk5x3ylpm" path="res://assets/sound/enter.mp3" id="5_30v81"]
 [ext_resource type="PackedScene" uid="uid://0k4srjb78bvw" path="res://src/tscns/Button.tscn" id="6_5v5mo"]
+[ext_resource type="AudioStream" uid="uid://ckccu2r2tftjm" path="res://assets/sound/Dear.mp3" id="7_nxr73"]
 
 [sub_resource type="Animation" id="Animation_3r5wp"]
 resource_name = "on_button"
@@ -67,7 +68,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0.054902, 0, 0.435294, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("3_50ryc")
-text = "version: 1.0.0"
+text = "version: 1.0.1"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -118,11 +119,11 @@ libraries = {
 "": SubResource("AnimationLibrary_qiw7d")
 }
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_t0fi6")
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Control"]
+position = Vector2(-364, -906)
+stream = ExtResource("5_30v81")
 
 [node name="SettingBtn" parent="." instance=ExtResource("6_5v5mo")]
-visible = false
 offset_left = 364.0
 offset_top = 1007.0
 offset_right = 364.0
@@ -137,4 +138,10 @@ offset_right = 364.0
 offset_bottom = 1113.0
 text = "RANKING"
 
+[node name="BGM" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_nxr73")
+autoplay = true
+bus = &"Music"
+
 [connection signal="pressed" from="Control/TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="button_pressed" from="SettingBtn" to="." method="_on_setting_btn_button_pressed"]

@@ -80,7 +80,7 @@ func setup(layers) -> void:
 	
 ## particle_pos: スコアパーティクルを生成するときの座標
 func createItem(id:Item.eItem, particle_pos:Vector2=Vector2.ZERO) -> Item:
-
+	print(particle_pos)
 	# PackedSceneを取得.
 	var packed = ITEM_TBL[id]
 	var item = packed.instantiate()

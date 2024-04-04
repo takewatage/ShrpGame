@@ -39,8 +39,6 @@ func _ready():
 	}
 	# セットアップ.
 	Common.setup(layers)
-	$BGM.play()
-	$BGM.volume_db = Save.getSaveData('setting_volume')
 	
 	change_image()
 
@@ -96,7 +94,6 @@ func popPartical(pos) -> void:
 
 # システム音
 func playSE(_sound) -> void:
-	print("ぽん！！！")
 	$SE.stop()
 	$SE.stream = _sound
 	$SE.play()
@@ -122,7 +119,6 @@ func _on_pose_btn_pressed():
 	
 # ポーズ後の開始
 func _on_menu_play_start():
-	$BGM.set_deferred('volume_db', Save.getSaveData("setting_volume"))
 	$ItemLayer.show()
 
 

@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://hj7xmu8a6aqp"]
+
+[ext_resource type="PackedScene" uid="uid://de00y0gqv2esg" path="res://src/tscns/menu/base_menu.tscn" id="1_uc7l0"]
+[ext_resource type="Script" path="res://src/script/setting_menu.gd" id="2_vgim5"]
+[ext_resource type="Texture2D" uid="uid://b8epnfsypuewt" path="res://assets/images/sound.png" id="3_71upg"]
+[ext_resource type="PackedScene" uid="uid://0k4srjb78bvw" path="res://src/tscns/Button.tscn" id="4_ayd8i"]
+
+[node name="SettingWindow" instance=ExtResource("1_uc7l0")]
+offset_right = 358.0
+offset_bottom = 641.0
+script = ExtResource("2_vgim5")
+
+[node name="Label" parent="TextureRect" index="0"]
+visible = true
+offset_top = 73.0
+offset_bottom = 156.0
+
+[node name="BgmVolume" type="HSlider" parent="TextureRect" index="1"]
+layout_mode = 0
+offset_left = 203.0
+offset_top = 255.0
+offset_right = 468.0
+offset_bottom = 316.0
+min_value = -10.0
+max_value = 5.0
+
+[node name="Sound" type="Sprite2D" parent="TextureRect" index="2"]
+position = Vector2(156, 289)
+scale = Vector2(0.58, 0.58)
+texture = ExtResource("3_71upg")
+
+[node name="BackBtn" parent="TextureRect" index="3" instance=ExtResource("4_ayd8i")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.480033
+anchor_top = 0.833043
+anchor_right = 0.480033
+anchor_bottom = 0.833043
+offset_left = 10.5
+offset_top = 32.7358
+offset_right = 10.5
+offset_bottom = 32.7358
+grow_horizontal = 1
+grow_vertical = 1
+text = "BACK"
+metadata/_edit_group_ = true
+
+[connection signal="value_changed" from="TextureRect/BgmVolume" to="." method="_on_bgm_volume_value_changed"]
