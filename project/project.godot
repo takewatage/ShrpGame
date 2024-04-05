@@ -21,6 +21,7 @@ config/icon="res://shrpIcon.svg"
 Common="*res://src/script/Common.gd"
 Save="res://src/script/global/Save.gd"
 UserSetting="*res://src/script/global/user_setting.gd"
+Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
 
 [display]
 
@@ -28,6 +29,10 @@ window/size/viewport_width=720
 window/size/viewport_height=1280
 window/stretch/mode="canvas_items"
 window/handheld/orientation=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-firebase/plugin.cfg", "res://addons/godot-flexbox/plugin.cfg")
 
 [input]
 

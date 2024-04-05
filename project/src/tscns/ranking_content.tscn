@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4cln822hjr1l"]
+
+[ext_resource type="Script" path="res://src/script/ranking_content.gd" id="1_dtt5a"]
+
+[node name="RankingContent" type="HBoxContainer"]
+script = ExtResource("1_dtt5a")
+metadata/_edit_lock_ = true
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+
+[node name="Score" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40

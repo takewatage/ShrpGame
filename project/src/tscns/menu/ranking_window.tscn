@@ -1,0 +1,102 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7bxt4jr7hj8d"]
+
+[ext_resource type="PackedScene" uid="uid://de00y0gqv2esg" path="res://src/tscns/menu/base_menu.tscn" id="1_iovl0"]
+[ext_resource type="Script" path="res://src/script/ranking_window.gd" id="2_3mt5r"]
+[ext_resource type="PackedScene" uid="uid://0k4srjb78bvw" path="res://src/tscns/Button.tscn" id="3_0mwxa"]
+
+[node name="RankingWindow" instance=ExtResource("1_iovl0")]
+anchor_left = 0.007
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.04
+offset_top = 0.0
+offset_right = -720.0
+offset_bottom = -1280.0
+script = ExtResource("2_3mt5r")
+
+[node name="ColorRect" parent="." index="0"]
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" parent="." index="1"]
+metadata/_edit_lock_ = true
+
+[node name="Label" parent="TextureRect" index="0"]
+visible = true
+text = "RANKING"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TextureRect" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.26
+anchor_right = 0.953
+anchor_bottom = 0.938
+offset_top = -0.38002
+offset_right = 0.246948
+offset_bottom = 0.406006
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/ScrollContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="RankingContainer" type="VBoxContainer" parent="TextureRect/ScrollContainer/MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer" index="0"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer/HBoxContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "name
+"
+
+[node name="Label2" type="Label" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer/HBoxContainer" index="1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "score"
+
+[node name="Panel" type="Panel" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer" index="1"]
+layout_mode = 2
+
+[node name="Line2D" type="Line2D" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer/Panel" index="0"]
+position = Vector2(-100, -100)
+points = PackedVector2Array(96, 102, 498, 102)
+width = 2.0
+
+[node name="NameForm" type="LineEdit" parent="." index="3"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 61.0
+offset_top = 1084.0
+offset_right = 662.0
+offset_bottom = 1166.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/caret_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 40
+placeholder_text = "name"
+
+[node name="OkButton" parent="NameForm" index="0" instance=ExtResource("3_0mwxa")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.497504
+anchor_top = 1.63415
+anchor_right = 0.497504
+anchor_bottom = 1.63415
+text = "OK"
+
+[connection signal="text_changed" from="NameForm" to="." method="_on_name_form_text_changed"]

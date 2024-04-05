@@ -17,11 +17,11 @@ const NEXT_ITEMS_TABLE = [
 # CanvasLayer.
 @onready var _wall_layer = $WallLayer
 @onready var _item_layer = $ItemLayer
+@onready var _ranking_layer = $RankingLayer
 #@onready var _particle_layer = $ParticleLayer
 @onready var _ui_layer = $UILayer
 @onready var _ui_score = $UILayer/Score
 @onready var _ui_hi_score = $UILayer/HiScore
-
 # -----------------------------------------------
 # variable
 # -----------------------------------------------
@@ -63,13 +63,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("gran_command"):
 		Common.disableAllChildren()
 	
-	
-func drop():
-	var dropItem = Common.ITEM_TBL[now_item_id].instantiate()
-	_item_layer.add_child(dropItem)
-	dropItem.position = $SelectItem.position
-	$SelectItem.hide()
-
+## nextとselect画像を変更
 func change_image():
 	now_item_id = next_item_id
 	next_item_id = NEXT_ITEMS_TABLE.pick_random()
@@ -99,7 +93,7 @@ func playSE(_sound) -> void:
 	$SE.play()
 	
 # ゲームオーバー処理
-func gameOver():
+func gameOver() -> void:
 	if Common.game_status != Common.GAME_STATUS.GAME_OVER:
 		print('gameOver')
 		Common.game_status = Common.GAME_STATUS.GAME_OVER
@@ -112,13 +106,13 @@ func gameOver():
 		get_tree().call_group("items", "jumpOut")
 
 # ポーズ
-func _on_pose_btn_pressed():
+func _on_pose_btn_pressed() -> void:
 	Common.gamePose()
 	$Menu.show()
 	$ItemLayer.hide()
 	
 # ポーズ後の開始
-func _on_menu_play_start():
+func _on_menu_play_start() -> void:
 	$ItemLayer.show()
 
 
@@ -135,5 +129,12 @@ func _on_strike_controller_shot(force) -> void:
 	change_image()
 
 ## タイトルに戻る
-func _on_title_button_button_pressed():
+func _on_title_button_button_pressed() -> void:
 	Common.goto_scene("res://src/tscns/Title.tscn")
+
+## ランキングに移動
+func _on_go_ranking_button_button_pressed() -> void:
+	var _ranking = preload('res://src/tscns/menu/ranking_window.tscn')
+	var _rankingMenu = _ranking.instantiate()
+	_ranking_layer.add_child(_rankingMenu)
+	_rankingMenu._show()
