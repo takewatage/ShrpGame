@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmcdncdrugvfc"]
+
+[ext_resource type="SpriteFrames" uid="uid://1qoqv1ly3f6k" path="res://assets/gif/loading.gif" id="1_msfj4"]
+[ext_resource type="Script" path="res://src/tscns/loading.gd" id="2_u5esd"]
+
+[node name="Loading" type="AnimatedSprite2D"]
+visible = false
+sprite_frames = ExtResource("1_msfj4")
+animation = &"gif"
+script = ExtResource("2_u5esd")

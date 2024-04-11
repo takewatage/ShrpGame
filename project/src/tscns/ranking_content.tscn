@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/script/ranking_content.gd" id="1_dtt5a"]
 
-[node name="RankingContent" type="HBoxContainer"]
+[node name="RankingContent" type="HBoxContainer" groups=["rankings"]]
 script = ExtResource("1_dtt5a")
 metadata/_edit_lock_ = true
 

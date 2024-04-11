@@ -1,0 +1,134 @@
+[gd_scene load_steps=9 format=3 uid="uid://cwd1vn77uv2ht"]
+
+[ext_resource type="PackedScene" uid="uid://0k4srjb78bvw" path="res://src/tscns/Button.tscn" id="1_i4bha"]
+[ext_resource type="Script" path="res://src/tscns/new_record_layer.gd" id="1_offnm"]
+[ext_resource type="Texture2D" uid="uid://bv63qh51ud5dp" path="res://assets/images/cancel.png" id="2_wk04g"]
+[ext_resource type="PackedScene" uid="uid://bmcdncdrugvfc" path="res://src/tscns/loading.tscn" id="4_5ains"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7irqi"]
+content_margin_left = 15.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_h0a5w"]
+line_spacing = 15.0
+font_size = 33
+
+[sub_resource type="LabelSettings" id="LabelSettings_qfdqo"]
+font_size = 33
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ewr2u"]
+font_size = 45
+
+[node name="NewRecordLayer" type="CanvasLayer"]
+layer = 3
+visible = false
+script = ExtResource("1_offnm")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 0.862745)
+
+[node name="NameForm" type="LineEdit" parent="ColorRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.5
+offset_top = -41.0
+offset_right = 300.5
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_7irqi")
+placeholder_text = "name"
+max_length = 10
+
+[node name="OkButton" parent="ColorRect" instance=ExtResource("1_i4bha")]
+layout_mode = 1
+offset_left = 2.0
+offset_top = 158.0
+offset_right = 2.0
+offset_bottom = 158.0
+text = "OK"
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_top = 304.0
+offset_right = 726.0
+offset_bottom = 387.0
+text = "あなたのスコアを
+世界ランキングに登録しよう！"
+label_settings = SubResource("LabelSettings_h0a5w")
+horizontal_alignment = 1
+
+[node name="ValidationLabel" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = 63.0
+offset_right = 301.0
+offset_bottom = 109.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_qfdqo")
+
+[node name="ScoreLabel" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -205.0
+offset_right = 366.0
+offset_bottom = -122.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SCORE: 9999"
+label_settings = SubResource("LabelSettings_ewr2u")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -117.0
+offset_top = 94.0
+offset_right = 141.0
+offset_bottom = 352.0
+grow_horizontal = 0
+scale = Vector2(0.2, 0.22)
+icon = ExtResource("2_wk04g")
+icon_alignment = 1
+
+[node name="Loading" parent="." instance=ExtResource("4_5ains")]
+position = Vector2(364, 958)
+
+[connection signal="text_changed" from="ColorRect/NameForm" to="." method="_on_name_form_text_changed"]
+[connection signal="button_pressed" from="ColorRect/OkButton" to="." method="_on_ok_button_button_pressed"]
+[connection signal="pressed" from="ColorRect/CloseButton" to="." method="_on_close_button_pressed"]

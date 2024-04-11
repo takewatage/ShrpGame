@@ -22,6 +22,8 @@ Common="*res://src/script/Common.gd"
 Save="res://src/script/global/Save.gd"
 UserSetting="*res://src/script/global/user_setting.gd"
 Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
+FirebaseService="*res://src/script/global/FirebaseService.gd"
+Uuid="*res://addons/uuid/uuid.gd"
 
 [display]
 
@@ -32,7 +34,7 @@ window/handheld/orientation=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot-firebase/plugin.cfg", "res://addons/godot-flexbox/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot-firebase/plugin.cfg")
 
 [input]
 

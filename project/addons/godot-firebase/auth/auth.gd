@@ -146,9 +146,9 @@ var _local_provider : AuthProvider = AuthProvider.new()
 func _ready() -> void:
     tcp_timer.wait_time = tcp_timeout
     tcp_timer.timeout.connect(_tcp_stream_timer)
-    
+
     Utilities.fix_http_request(self)
-    if OS.get_name() == "HTML5" or OS.get_name() == "Web":
+    if Utilities.is_web():
         _local_uri += "tmp_js_export.html"
 
 
@@ -281,7 +281,7 @@ func get_auth_with_redirect(provider: AuthProvider) -> void:
         url_endpoint+=key+"="+provider.params[key]+"&"
     url_endpoint += provider.params.redirect_type+"="+_local_uri
     url_endpoint = _clean_url(url_endpoint)
-    if OS.get_name() == "HTML5" and OS.has_feature("JavaScript"):
+    if Utilities.is_web() and OS.has_feature("JavaScript"):
         JavaScriptBridge.eval('window.location.replace("' + url_endpoint + '")')
     elif Engine.has_singleton(_INAPP_PLUGIN) and OS.get_name() == "iOS":
         #in app for ios if the iOS plugin exists
@@ -334,7 +334,7 @@ func exchange_token(code : String, redirect_uri : String, request_url: String, _
         if err != OK:
             is_busy = false
             Firebase._printerr("Error exchanging tokens: %s" % err)
-            
+
 # Open a web page in browser redirecting to Google oAuth2 page for the current project
 # Once given user's authorization, a token will be generated.
 # NOTE** with this method, the authorization process will be copy-pasted
@@ -346,7 +346,7 @@ func get_google_auth_manual(provider: AuthProvider = _local_provider) -> void:
 func _tcp_stream_timer() -> void:
     var peer : StreamPeer = tcp_server.take_connection()
     if peer != null:
-        var raw_result : String = peer.get_utf8_string(400)
+        var raw_result : String = peer.get_utf8_string(441)
         if raw_result != "" and raw_result.begins_with("GET"):
             tcp_timer.stop()
             remove_child(tcp_timer)
@@ -357,13 +357,13 @@ func _tcp_stream_timer() -> void:
                 if _local_provider.params.response_type in splitted[0]:
                     token = splitted[1]
                     break
-                    
+
             if token == "":
                 login_failed.emit()
                 peer.disconnect_from_host()
                 tcp_server.stop()
                 return
-                
+
             var data : PackedByteArray = '<p style="text-align:center">&#128293; You can close this window now. &#128293;</p>'.to_ascii_buffer()
             peer.put_data(("HTTP/1.1 200 OK\n").to_ascii_buffer())
             peer.put_data(("Server: Godot Firebase SDK\n").to_ascii_buffer())
@@ -375,7 +375,7 @@ func _tcp_stream_timer() -> void:
             await self.login_succeeded
             peer.disconnect_from_host()
             tcp_server.stop()
-            
+
 
 # Function used to logout of the system, this will also remove_at the local encrypted auth file if there is one
 func logout() -> void:
@@ -383,6 +383,11 @@ func logout() -> void:
     remove_auth()
     logged_out.emit()
 
+# Checks to see if we need a hard login
+func needs_login() -> bool:
+    var encrypted_file = FileAccess.open_encrypted_with_pass("user://user.auth", FileAccess.READ, _config.apiKey)
+    var err = encrypted_file == null
+    return err
 
 # Function is called when requesting a manual token refresh
 func manual_token_refresh(auth_data):
@@ -419,7 +424,7 @@ func _on_FirebaseAuth_request_completed(result : int, response_code : int, heade
             Firebase._printerr("Error while parsing auth body json")
             auth_request.emit(ERR_PARSE_ERROR, "Error while parsing auth body json")
             return
-        
+
         res = json
 
     if response_code == HTTPClient.RESPONSE_OK:
@@ -431,6 +436,10 @@ func _on_FirebaseAuth_request_completed(result : int, response_code : int, heade
             begin_refresh_countdown()
             # Refresh token countdown
             auth_request.emit(1, auth)
+
+            if _needs_refresh:
+                _needs_refresh = false
+                login_succeeded.emit(auth)
         else:
             match res.kind:
                 RESPONSE_SIGNUP:
@@ -619,8 +628,8 @@ func begin_refresh_countdown() -> void:
 
 func get_token_from_url(provider: AuthProvider):
     var token_type: String = provider.params.response_type if provider.params.response_type == "code" else "access_token"
-    if OS.has_feature('JavaScript'):
-        var token = JavaScriptBridge.eval(""" 
+    if OS.has_feature('web'):
+        var token = JavaScriptBridge.eval("""
             var url_string = window.location.href.replaceAll('?#', '?');
             var url = new URL(url_string);
             url.searchParams.get('"""+token_type+"""');

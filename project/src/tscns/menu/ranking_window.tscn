@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7bxt4jr7hj8d"]
+[gd_scene load_steps=8 format=3 uid="uid://c7bxt4jr7hj8d"]
 
 [ext_resource type="PackedScene" uid="uid://de00y0gqv2esg" path="res://src/tscns/menu/base_menu.tscn" id="1_iovl0"]
 [ext_resource type="Script" path="res://src/script/ranking_window.gd" id="2_3mt5r"]
 [ext_resource type="PackedScene" uid="uid://0k4srjb78bvw" path="res://src/tscns/Button.tscn" id="3_0mwxa"]
+[ext_resource type="PackedScene" uid="uid://d4cln822hjr1l" path="res://src/tscns/ranking_content.tscn" id="3_bcq04"]
+[ext_resource type="PackedScene" uid="uid://cwd1vn77uv2ht" path="res://src/tscns/new_record_layer.tscn" id="4_hsboe"]
+[ext_resource type="PackedScene" uid="uid://bmcdncdrugvfc" path="res://src/tscns/loading.tscn" id="5_nhtnb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhkng"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_top = 3
 
 [node name="RankingWindow" instance=ExtResource("1_iovl0")]
 anchor_left = 0.007
@@ -16,9 +23,12 @@ offset_bottom = -1280.0
 script = ExtResource("2_3mt5r")
 
 [node name="ColorRect" parent="." index="0"]
+color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" parent="." index="1"]
+offset_top = 104.0
+offset_bottom = 1188.0
 metadata/_edit_lock_ = true
 
 [node name="Label" parent="TextureRect" index="0"]
@@ -30,10 +40,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.26
 anchor_right = 0.953
-anchor_bottom = 0.938
-offset_top = -0.38002
+anchor_bottom = 0.844
+offset_top = -0.839996
 offset_right = 0.246948
-offset_bottom = 0.406006
+offset_bottom = 0.103943
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
@@ -63,40 +73,56 @@ theme_override_font_sizes/font_size = 40
 text = "score"
 
 [node name="Panel" type="Panel" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer" index="1"]
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhkng")
 
-[node name="Line2D" type="Line2D" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer/Panel" index="0"]
-position = Vector2(-100, -100)
-points = PackedVector2Array(96, 102, 498, 102)
-width = 2.0
+[node name="RankingContent" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer" index="2" instance=ExtResource("3_bcq04")]
+layout_mode = 2
+ranking_name = "石塚"
+ranking_score = "9999"
 
-[node name="NameForm" type="LineEdit" parent="." index="3"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 61.0
-offset_top = 1084.0
-offset_right = 662.0
-offset_bottom = 1166.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/caret_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 40
-placeholder_text = "name"
+[node name="RankingContent2" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer" index="3" instance=ExtResource("3_bcq04")]
+layout_mode = 2
+ranking_name = "石塚"
+ranking_score = "9999"
 
-[node name="OkButton" parent="NameForm" index="0" instance=ExtResource("3_0mwxa")]
-visible = false
+[node name="RankingContent3" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer" index="4" instance=ExtResource("3_bcq04")]
+layout_mode = 2
+ranking_name = "石塚"
+ranking_score = "9999"
+
+[node name="RankingContent4" parent="TextureRect/ScrollContainer/MarginContainer/RankingContainer" index="5" instance=ExtResource("3_bcq04")]
+layout_mode = 2
+ranking_name = "石塚"
+ranking_score = "9999"
+
+[node name="CloseButton" parent="TextureRect" index="2" instance=ExtResource("3_0mwxa")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.497504
-anchor_top = 1.63415
-anchor_right = 0.497504
-anchor_bottom = 1.63415
-text = "OK"
+anchor_left = 1.099
+anchor_top = 1.5
+anchor_right = 1.099
+anchor_bottom = 1.5
+offset_left = -361.5
+offset_top = -646.0
+offset_right = -361.5
+offset_bottom = -646.0
+text = "CLOSE"
 
-[connection signal="text_changed" from="NameForm" to="." method="_on_name_form_text_changed"]
+[node name="GameId" type="Label" parent="." index="2"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 1250.0
+offset_right = 94.0
+offset_bottom = 1273.0
+text = "GAME ID: "
+
+[node name="NewRecordLayer" parent="." index="4" instance=ExtResource("4_hsboe")]
+
+[node name="Loading" parent="." index="5" instance=ExtResource("5_nhtnb")]
+visible = true
+position = Vector2(362, 599)
+
+[connection signal="button_pressed" from="TextureRect/CloseButton" to="." method="_on_close_button_button_pressed"]
+[connection signal="ranking_update" from="NewRecordLayer" to="." method="_on_new_record_layer_ranking_update"]

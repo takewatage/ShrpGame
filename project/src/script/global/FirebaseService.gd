@@ -1,63 +1,72 @@
 extends Node
 
-class_name FirebaseService
+signal login_success(bool)
 
 var COLLECTION_ID = 'ranking'
 
+
+
 func _ready() -> void:
-	Firebase.Auth.login_succeeded.connect(on_login_succeeded)
-	Firebase.Auth.signup_succeeded.connect(on_signup_succeeded)
-	Firebase.Auth.login_failed.connect(on_login_failed)
-	Firebase.Auth.signup_failed.connect(on_signup_failed)
-	
-	
-func get_ranking():
-	var result: Array = []
-	if Firebase.Auth.check_auth_file():
-		print("Logged in")
-		var auth = Firebase.Auth.auth
-		print(auth.localid)
-		if auth.localid:
-			var listTask: FirestoreTask = Firebase.Firestore.list(COLLECTION_ID)
-			
-			var query: FirestoreQuery = FirestoreQuery.new()
-			## FROM a collection
-			query.from("ranking")
-			## sort
-			query.order_by("score", FirestoreQuery.DIRECTION.DESCENDING)
-			## LIMIT to the first 10
-			query.limit(3)
-			
-			#var task: FirestoreTask = Firebase.Firestore.query(query)
-			var task = Firebase.Firestore.query(query)
-			
-			var res = await task.task_finished
+    Firebase.Auth.login_succeeded.connect(_on_login_succeeded)
+    Firebase.Auth.signup_succeeded.connect(_on_signup_succeeded)
+    Firebase.Auth.login_failed.connect(_on_login_failed)
+    Firebase.Auth.signup_failed.connect(_on_signup_failed)
+    Firebase.Firestore.collection(COLLECTION_ID).get_document.connect(_on_document_get)
+    
+func is_auth() -> bool:
+    return Firebase.Auth.check_auth_file()
+        
+func login():
+    if Firebase.Auth.check_auth_file():
+        return self
+    else:
+        Firebase.Auth.login_anonymous()
+        return self
+    
+## ランキング取得
+func get_ranking() -> Array:
+    var result: Array = []
+    if Firebase.Auth.check_auth_file():
+        var auth = Firebase.Auth.auth
+        if auth.localid:
+            # ranking コレクション取得
+            var list_task: FirestoreTask = Firebase.Firestore.list(COLLECTION_ID)
+            var res = await list_task.task_finished
+            for i in res.data:
+                result.append(i.doc_fields)
+    
+    # score 降順
+    result.sort_custom(func(a, b): return a.score > b.score)
+    return result
+    
+## ランキング更新
+func update_ranking(ranking_model: Ranking) -> void:
+    if Firebase.Auth.check_auth_file():
+        var auth = Firebase.Auth.auth
+        if auth.localid:
+            var document = ranking_model.game_id
+            var collection: FirestoreCollection = Firebase.Firestore.collection(COLLECTION_ID)
+            var task: FirestoreTask = collection.add(document, ranking_model.get_postable()) 
+            await task.task_finished
 
-		
-			print("OK")
-			print(res.data)
-
-
-func login_anonymous():
-	Firebase.Auth.login_anonymous()
-
-func on_login_succeeded(auth):
-	print(auth)
-	print('Login success!')
-	Firebase.Auth.save_auth(auth)
-	
-func on_signup_succeeded(auth):
-	print(auth)
-	print('Sign up success!"')
-	Firebase.Auth.save_auth(auth)
-	
-func on_login_failed(error_code, message):
-	print(error_code)
-	print("Login failed. Error: %s" % message)
-	
-func on_signup_failed(error_code, message):
-	print(error_code)
-	print("Sign up failed. Error: %s" % message)
-	
-func on_result_query_fin(res: Array):
-	print(res)
+func _on_login_succeeded(auth) -> void:
+    Firebase.Auth.save_auth(auth)
+    login_success.emit(true)
+    
+func _on_signup_succeeded(auth) -> void:
+    Firebase.Auth.save_auth(auth)
+    login_success.emit(true)
+    
+func _on_login_failed(error_code, message) -> void:
+    print(error_code)
+    print("Login failed. Error: %s" % message)
+    Firebase.Auth.logout()
+    login_success.emit(false)
+    
+func _on_signup_failed(error_code, message) -> void:
+    print(error_code)
+    print("Sign up failed. Error: %s" % message)
+    login_success.emit(false)
+    
+func _on_document_get():
+    print("doc get complete")

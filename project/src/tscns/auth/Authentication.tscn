@@ -59,7 +59,12 @@ text = "Sign up"
 layout_mode = 2
 text = "Sign up2匿名"
 
+[node name="DataButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Sign up2匿名"
+
 [connection signal="pressed" from="VBoxContainer/LoginButton" to="." method="_on_login_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/LogoutButton" to="." method="_on_logout_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/SignupButton" to="." method="_on_signup_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/SignupButton2" to="." method="_on_signup_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/DataButton" to="." method="_on_data_button_pressed"]

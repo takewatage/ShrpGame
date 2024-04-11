@@ -30,5 +30,5 @@ extends HBoxContainer
 # function
 # -----------------------------------------------
 func _ready() -> void:
-	$Name.text = ranking_name
-	$Score.text = ranking_score
+    $Name.text = ranking_name
+    $Score.text = ranking_score

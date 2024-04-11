@@ -4,21 +4,18 @@ signal button_pressed
 @export var text = ''
 @export var texture: Texture
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	$TextureButton/HBoxContainer/Label.text = text
-	$TextureButton/HBoxContainer/TextureRect.texture = texture
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+    $TextureButton/HBoxContainer/Label.text = text
+    $TextureButton/HBoxContainer/TextureRect.texture = texture
+    
 func _process(_delta):
-	pass
+    pass
 
 
-func _on_texture_button_pressed():
-	$TextureButton/AnimationPlayer.play("on_button")
-	await get_tree().create_timer(0.1).timeout
-	button_pressed.emit()
-
-
-func _on_texture_button_button_down() -> void:
-	pass # Replace with function body.
+func _on_texture_button_pressed() -> void:
+    # 複数press対策
+    $TextureButton.disabled = true
+    $TextureButton/AnimationPlayer.play("on_button")
+    await get_tree().create_timer(0.1).timeout
+    $TextureButton.disabled = false
+    button_pressed.emit()
