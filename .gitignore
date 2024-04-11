@@ -4,3 +4,4 @@
 android/
 build
 project/.import
+project/addons/*/.env
