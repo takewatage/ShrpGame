@@ -9,7 +9,6 @@ func _ready():
     Firebase.Auth.login_failed.connect(on_login_failed)
     Firebase.Auth.signup_failed.connect(on_signup_failed)
     
-    print(Uuid.v4())
 
     
     if Firebase.Auth.check_auth_file():
@@ -30,7 +29,7 @@ func _ready():
             
             
             
-            var task: FirestoreTask = collection.add(Uuid.v4(), data) 
+            var task: FirestoreTask = collection.add('doc', data) 
         
         print("OK")
         

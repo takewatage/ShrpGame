@@ -34,8 +34,6 @@ func _on_setting_btn_button_pressed() -> void:
 
 ## ランキング表示
 func _on_ranking_btn_button_pressed() -> void:
-    print(Common.score)
-    print(Common.game_id)
     var _ranking_window_instance = _ranking_window.instantiate()
     add_child(_ranking_window_instance)
     _ranking_window_instance.position = Vector2.ZERO

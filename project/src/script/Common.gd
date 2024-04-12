@@ -76,16 +76,17 @@ func _deferred_goto_scene(scene_path):
     get_tree().change_scene_to_file(scene_path)
 
 ## セットアップ.
-func setup(layers) -> void:
-    game_id = Uuid.v4()
-    print('game_id:  ' + str(game_id))
-    
+func setup(layers) -> void:    
     # スコア初期化.
     score = 0
     # ハイスコア設定
     hi_score = UserSetting.get_value('hiscore')
     _layers = layers
     game_status = GAME_STATUS.GAME_PLAYING
+    
+func set_game_id(_game_id):
+    game_id = _game_id
+    print('game_id:  ' + str(game_id))
     
 ## particle_pos: スコアパーティクルを生成するときの座標
 func createItem(id:Item.eItem, particle_pos:Vector2=Vector2.ZERO) -> Item:

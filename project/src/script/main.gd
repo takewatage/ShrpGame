@@ -10,6 +10,8 @@ const NEXT_ITEMS_TABLE = [
     Item.eItem.VUE,
     Item.eItem.FIGMA,
 ]
+## utility 
+const uuid_util = preload('res://addons/uuid/uuid.gd')
 
 # -----------------------------------------------
 # onready.
@@ -30,6 +32,7 @@ var now_item_id #現在のitemのID
 var next_item_id = NEXT_ITEMS_TABLE.pick_random() #次のitemのID
 
 func _ready():
+    
     # レイヤーテーブル.
     var layers = {
         "wall": _wall_layer,
@@ -37,6 +40,7 @@ func _ready():
         #"particle": _particle_layer,
         "ui": _ui_layer,
     }
+    Common.set_game_id(uuid_util.v4())
     # セットアップ.
     Common.setup(layers)
     

@@ -46,10 +46,6 @@ func _validate():
     
     return is_valid
 
-    
-func _on_name_form_text_changed(new_text: String) -> void:
-    pass
-
 func _on_ok_button_button_pressed() -> void:    
     var valid = _validate()
     if valid:

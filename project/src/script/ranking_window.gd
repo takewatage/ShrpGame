@@ -83,6 +83,8 @@ func _check_ranking():
     
     if !Common.game_id:
         return false
+        
+    print(ranking_data.any(func(x): return x.game_id == Common.game_id))
     
     # ランキングに登録してなかったら更新
     if not ranking_data.any(func(x): return x.game_id == Common.game_id):

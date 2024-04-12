@@ -2,8 +2,8 @@ extends AnimatedSprite2D
 
 var loading = false
 
-func set_loading(bool) -> void:
-    if bool:
+func set_loading(_bool: bool) -> void:
+    if _bool:
         show()
         self.play('gif')
     else:

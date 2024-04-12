@@ -23,7 +23,6 @@ Save="res://src/script/global/Save.gd"
 UserSetting="*res://src/script/global/user_setting.gd"
 Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
 FirebaseService="*res://src/script/global/FirebaseService.gd"
-Uuid="*res://addons/uuid/uuid.gd"
 
 [display]
 
@@ -63,4 +62,5 @@ gran_command={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_s3tc_bptc=true
 textures/vram_compression/import_etc2_astc=true
