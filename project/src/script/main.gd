@@ -138,6 +138,7 @@ func _on_strike_controller_shot(force) -> void:
 
 ## タイトルに戻る
 func _on_title_button_button_pressed() -> void:
+    Common.set_game_id(null)
     Common.goto_scene("res://src/tscns/Title.tscn")
 
 ## ランキング表示
