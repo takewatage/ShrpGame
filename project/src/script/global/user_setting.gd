@@ -61,8 +61,6 @@ func set_value(key, value):
         _update_volume(SOUND_EFFECT_VOLUME, AUDIO_BUS_SE)
     if key == MUSIC_VOLUME_ENABLED:
         _mute_bus(MUSIC_VOLUME_ENABLED, AUDIO_BUS_MUSIC)
-    if key == HI_SCORE:
-        _update_player_data(HI_SCORE, PLAYER_DATA)
     
     print("config save...")
     emit_signal("on_value_change", key, value)
@@ -97,8 +95,3 @@ func _update_volume(property, bus):
 func _mute_bus(property, bus):
     var enabled = get_value_with_default(property, USER_SETTING_DEFAULTS[property])
     AudioServer.set_bus_mute(AudioServer.get_bus_index(bus), not enabled)
-
-    
-func _update_player_data(property, key):
-    #var enabled = get_value_with_default(property, USER_SETTING_DEFAULTS[property])
-    pass
