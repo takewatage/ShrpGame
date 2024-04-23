@@ -153,4 +153,3 @@ func playSE(idx: int) -> void:
         # メインシーンにplaySe()があるか
         if current_scene.has_method("playSE"):
             current_scene.playSE(SE_TBL[idx])
-    

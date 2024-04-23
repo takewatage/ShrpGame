@@ -34,19 +34,21 @@ signal ranking_update()
 func _ready() -> void:
     $ColorRect/ScoreLabel.text = 'SCORE: ' + str(Common.score)
     
+## バリデーション
 func _validate():
     var is_valid = false
     if not _text_input.text.length():
         is_valid = true
         _varidation_text.text = '名前は必須です'
-        #$NameForm/OkButton.show()
+        
     else:
         is_valid = false
         _varidation_text.text = ''
     
     return is_valid
 
-func _on_ok_button_button_pressed() -> void:    
+func _on_ok_button_button_pressed() -> void:
+      
     var valid = _validate()
     if valid:
         return
@@ -57,9 +59,10 @@ func _on_ok_button_button_pressed() -> void:
         'score': Common.score,
     })
     
-    $Loading.set_loading(true)
-    await FirebaseService.update_ranking(ranking_model)
-    $Loading.set_loading(false)
+    $Loading.show()
+    await FirebaseService.remove_ranking()
+    await FirebaseService.add_ranking(ranking_model)
+    $Loading.hide()
     ranking_update.emit()
     
     queue_free()

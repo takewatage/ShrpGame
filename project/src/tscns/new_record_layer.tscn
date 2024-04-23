@@ -127,7 +127,7 @@ icon = ExtResource("2_wk04g")
 icon_alignment = 1
 
 [node name="Loading" parent="." instance=ExtResource("4_5ains")]
-position = Vector2(364, 958)
+visible = false
 
 [connection signal="text_changed" from="ColorRect/NameForm" to="." method="_on_name_form_text_changed"]
 [connection signal="button_pressed" from="ColorRect/OkButton" to="." method="_on_ok_button_button_pressed"]

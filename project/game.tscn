@@ -134,6 +134,7 @@ color = Color(0, 0, 0, 0)
 offset_top = 274.0
 offset_bottom = 274.0
 text = "TITLE"
+se_on = false
 
 [node name="Anim" type="AnimationPlayer" parent="GameOverLayer"]
 libraries = {

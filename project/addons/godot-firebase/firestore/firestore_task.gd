@@ -108,7 +108,7 @@ func _on_request_completed(result : int, response_code : int, headers : PackedSt
                 document = FirestoreDocument.new(bod)
                 update_document.emit(document)
             Task.TASK_DELETE:
-                delete_document.emit(true)
+                delete_document.emit()
             Task.TASK_QUERY:
                 data = []
                 for doc in bod:

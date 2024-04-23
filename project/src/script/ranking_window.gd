@@ -22,22 +22,6 @@ var ranking_data = []
 # function
 # -----------------------------------------------
 
-
-const _ranking_data = [
-    {
-        'name': 'takewatage',
-        'score': '9999',
-    },
-    {
-        'name': 'amagi',
-        'score': '0',
-    },
-    {
-        'name': 'watage',
-        'score': '0',
-    }
-]
-
 func _ready() -> void:
     ## signal
     ## 開いた時
@@ -50,10 +34,10 @@ func _process(_delta: float) -> void:
 func _on_open_ranking():
     if Common.game_id:
         $GameId.text = Common.game_id
+    await get_tree().create_timer(0.5).timeout
     await _ranking_fetch()
         
     if _check_ranking():
-        print("ランキング更新！！！")
         $NewRecordLayer.show()
 
 func _on_name_form_text_submitted(new_text: String) -> void:
@@ -67,10 +51,10 @@ func _on_close_button_button_pressed() -> void:
     
 ## ランキング取得
 func _ranking_fetch():
-    $Loading.set_loading(true)
+    $Loading.show()
     get_tree().call_group('rankings', 'queue_free')
     ranking_data = await FirebaseService.get_ranking()
-    $Loading.set_loading(false) 
+    $Loading.hide() 
     # データ表示
     for i in ranking_data:
         var ranking_item_instance = _ranking_item.instantiate()
@@ -83,8 +67,6 @@ func _check_ranking():
     
     if !Common.game_id:
         return false
-        
-    print(ranking_data.any(func(x): return x.game_id == Common.game_id))
     
     # ランキングに登録してなかったら更新
     if not ranking_data.any(func(x): return x.game_id == Common.game_id):

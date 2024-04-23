@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://0k4srjb78bvw"]
+[gd_scene load_steps=6 format=3 uid="uid://0k4srjb78bvw"]
 
 [ext_resource type="Texture2D" uid="uid://cvp2quxfsa7uh" path="res://assets/images/button.png" id="1_lvn4q"]
 [ext_resource type="Script" path="res://src/script/Button.gd" id="1_uicjc"]
+[ext_resource type="AudioStream" uid="uid://cc4ofk5x3ylpm" path="res://assets/sound/enter.mp3" id="3_mxmh7"]
 
 [sub_resource type="Animation" id="Animation_3r5wp"]
 resource_name = "on_button"
@@ -77,5 +78,9 @@ theme_override_font_sizes/font_size = 30
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="PressSE" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-364, -906)
+stream = ExtResource("3_mxmh7")
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

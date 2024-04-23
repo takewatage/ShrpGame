@@ -1,10 +1,40 @@
 [gd_scene load_steps=3 format=3 uid="uid://bmcdncdrugvfc"]
 
-[ext_resource type="SpriteFrames" uid="uid://1qoqv1ly3f6k" path="res://assets/gif/loading.gif" id="1_msfj4"]
 [ext_resource type="Script" path="res://src/tscns/loading.gd" id="2_u5esd"]
 
-[node name="Loading" type="AnimatedSprite2D"]
-visible = false
-sprite_frames = ExtResource("1_msfj4")
-animation = &"gif"
+[sub_resource type="LabelSettings" id="LabelSettings_eh518"]
+font_size = 30
+
+[node name="Loading" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_vertical = 4
 script = ExtResource("2_u5esd")
+
+[node name="LoadingTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 719.0
+offset_bottom = 1281.0
+color = Color(0, 0, 0, 0.392157)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 320.0
+offset_top = 640.0
+offset_right = 397.0
+offset_bottom = 668.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading"
+label_settings = SubResource("LabelSettings_eh518")
+
+[connection signal="timeout" from="LoadingTimer" to="." method="_on_timer_timeout"]

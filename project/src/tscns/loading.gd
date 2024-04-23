@@ -1,11 +1,17 @@
-extends AnimatedSprite2D
+extends Control
 
-var loading = false
+var loading_text = "Loading"
+var animation_index:int = 0    
 
-func set_loading(_bool: bool) -> void:
-    if _bool:
-        show()
-        self.play('gif')
-    else:
-        self.stop()
-        hide()
+func _ready() -> void:
+    $Label.text = loading_text
+
+func _on_timer_timeout() -> void:
+    animation_index += 1
+    
+    if animation_index > 3:
+        animation_index = 0
+    var dots = ''
+    for dot in animation_index:
+        dots += '.'
+    $Label.text = loading_text + dots
