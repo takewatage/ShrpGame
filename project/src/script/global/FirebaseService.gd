@@ -11,10 +11,10 @@ var COLLECTION_ID = 'ranking'
 var ranking_data = []
 
 func _ready() -> void:
-    #Firebase.Auth.login_succeeded.connect(_on_login_succeeded)
-    #Firebase.Auth.signup_succeeded.connect(_on_signup_succeeded)
-    #Firebase.Auth.login_failed.connect(_on_login_failed)
-    #Firebase.Auth.signup_failed.connect(_on_signup_failed)
+    Firebase.Auth.login_succeeded.connect(_on_login_succeeded)
+    Firebase.Auth.signup_succeeded.connect(_on_signup_succeeded)
+    Firebase.Auth.login_failed.connect(_on_login_failed)
+    Firebase.Auth.signup_failed.connect(_on_signup_failed)
     Firebase.Firestore.collection(COLLECTION_ID).get_document.connect(_on_document_get)
     
     
@@ -89,7 +89,4 @@ func _on_signup_failed(error_code, message) -> void:
     
 func _on_document_get():
     print("doc get complete")
-    
-#func _on_delete_document(_val):
-    #print("delete doc complete!!!")
-    #print(_val)
+
