@@ -21,7 +21,6 @@ const uuid_util = preload('res://addons/uuid/uuid.gd')
 @onready var _wall_layer = $WallLayer
 @onready var _item_layer = $ItemLayer
 @onready var _ranking_layer = $RankingLayer
-#@onready var _particle_layer = $ParticleLayer
 @onready var _ui_layer = $UILayer
 @onready var _ui_score = $UILayer/Score
 @onready var _ui_hi_score = $UILayer/HiScore
@@ -37,7 +36,6 @@ func _ready():
     var layers = {
         "wall": _wall_layer,
         "item": _item_layer,
-        #"particle": _particle_layer,
         "ui": _ui_layer,
     }
     Common.set_game_id(uuid_util.v4())
@@ -47,9 +45,7 @@ func _ready():
     change_image()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-    #$SelectItem.position = $Player.position
     $StrikeController.target_vector = $SelectItem.position
     
     if $SelectItem.visible:
@@ -91,7 +87,7 @@ func popPartical(pos) -> void:
     $Particles_star.set_deferred("emitting", true)
 
 # システム音
-func playSE(_sound) -> void:
+func playSE(_sound):
     $SE.stop()
     $SE.stream = _sound
     $SE.play()
@@ -146,3 +142,9 @@ func _on_go_ranking_button_button_pressed() -> void:
     var _ranking_instance = _ranking_scene.instantiate()
     _ranking_layer.add_child(_ranking_instance)
     _ranking_instance._show()
+
+## ゲームオーバーエリアに入った時
+func _on_game_over_area_body_entered(body: Node2D) -> void:
+    if body.is_in_group('items'):
+        body.queue_free()
+        gameOver()

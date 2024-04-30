@@ -146,7 +146,7 @@ func gameResume():
         # ポーズ解除
         tree.paused = false
         
-        
+## システム音起動
 func playSE(idx: int) -> void:
     if SE_TBL[idx]:
         var current_scene = get_tree().get_current_scene()

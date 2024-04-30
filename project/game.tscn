@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://csu8yj5gxhp5s"]
+[gd_scene load_steps=20 format=3 uid="uid://csu8yj5gxhp5s"]
 
 [ext_resource type="Script" path="res://src/script/main.gd" id="1_8bpip"]
 [ext_resource type="Texture2D" uid="uid://buyi4726fn4ns" path="res://assets/images/background.png" id="2_pj2td"]
@@ -14,10 +14,16 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xsem4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlcoa"]
-size = Vector2(656, 10)
+size = Vector2(656, 27)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8y12u"]
-size = Vector2(10, 660)
+size = Vector2(40, 660)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppqvb"]
+size = Vector2(18, 1776)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jr58r"]
+size = Vector2(16.5, 1765.5)
 
 [sub_resource type="Animation" id="Animation_r6tmk"]
 length = 0.001
@@ -79,6 +85,9 @@ _data = {
 "gameOverAnimation": SubResource("Animation_slcf1")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0buy2"]
+size = Vector2(1558, 37)
+
 [node name="Main" type="Node"]
 script = ExtResource("1_8bpip")
 
@@ -102,6 +111,7 @@ freeze = true
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_bottom"]
+position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_mlcoa")
 
 [node name="wall_left" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
@@ -110,8 +120,17 @@ freeze = true
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_left"]
-position = Vector2(35, 861)
+position = Vector2(20, 861)
 shape = SubResource("RectangleShape2D_8y12u")
+
+[node name="out_wall_left" type="RigidBody2D" parent="WallLayer"]
+physics_material_override = SubResource("PhysicsMaterial_xsem4")
+freeze = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/out_wall_left"]
+position = Vector2(-424, 432)
+shape = SubResource("RectangleShape2D_ppqvb")
 
 [node name="wall_right" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
 position = Vector2(48, 0)
@@ -119,8 +138,14 @@ physics_material_override = SubResource("PhysicsMaterial_xsem4")
 freeze = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_right"]
-position = Vector2(637, 861)
+position = Vector2(652, 861)
 shape = SubResource("RectangleShape2D_8y12u")
+
+[node name="out_wall_right" type="StaticBody2D" parent="WallLayer"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/out_wall_right"]
+position = Vector2(1152.25, 434.75)
+shape = SubResource("RectangleShape2D_jr58r")
 
 [node name="GameOverLayer" type="CanvasLayer" parent="."]
 visible = false
@@ -350,9 +375,16 @@ bus = &"Music"
 [node name="RankingLayer" type="CanvasLayer" parent="."]
 layer = 2
 
+[node name="GameOverArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameOverArea"]
+position = Vector2(363, 1298)
+shape = SubResource("RectangleShape2D_0buy2")
+
 [connection signal="button_pressed" from="GameOverLayer/TitleButton" to="." method="_on_title_button_button_pressed"]
 [connection signal="button_pressed" from="GameOverLayer/GoRankingButton" to="." method="_on_go_ranking_button_button_pressed"]
 [connection signal="pressed" from="UILayer/PoseBtn" to="." method="_on_pose_btn_pressed"]
 [connection signal="visibility_changed" from="ItemLayer" to="." method="_on_item_layer_visibility_changed"]
 [connection signal="shot" from="StrikeController" to="." method="_on_strike_controller_shot"]
 [connection signal="playStart" from="Menu" to="." method="_on_menu_play_start"]
+[connection signal="body_entered" from="GameOverArea" to="." method="_on_game_over_area_body_entered"]
