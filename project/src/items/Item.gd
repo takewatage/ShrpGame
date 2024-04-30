@@ -114,12 +114,6 @@ func jumpOut() -> void:
     
     var shot_speed = 250.0
     var shot_force = shot_speed * force_direction
-
-    for child in Common.getLayer('wall').get_children():
-        if child.is_class("RigidBody2D"):
-            var collision_shape = child.get_node("CollisionShape2D")
-            if collision_shape:
-                collision_shape.set_deferred('disabled', true)
                 
     apply_central_impulse(shot_force)
     

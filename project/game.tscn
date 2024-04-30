@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://csu8yj5gxhp5s"]
+[gd_scene load_steps=19 format=3 uid="uid://csu8yj5gxhp5s"]
 
 [ext_resource type="Script" path="res://src/script/main.gd" id="1_8bpip"]
 [ext_resource type="Texture2D" uid="uid://buyi4726fn4ns" path="res://assets/images/background.png" id="2_pj2td"]
@@ -15,9 +15,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mlcoa"]
 size = Vector2(656, 27)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8y12u"]
-size = Vector2(40, 660)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ppqvb"]
 size = Vector2(18, 1776)
@@ -104,7 +101,7 @@ position = Vector2(360, 286)
 
 [node name="WallLayer" type="CanvasLayer" parent="."]
 
-[node name="wall_bottom" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
+[node name="wall_bottom" type="RigidBody2D" parent="WallLayer" groups=["walls"]]
 position = Vector2(363, 1186)
 physics_material_override = SubResource("PhysicsMaterial_xsem4")
 freeze = true
@@ -114,14 +111,14 @@ metadata/_edit_group_ = true
 position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_mlcoa")
 
-[node name="wall_left" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
+[node name="wall_left" type="RigidBody2D" parent="WallLayer" groups=["walls"]]
 physics_material_override = SubResource("PhysicsMaterial_xsem4")
 freeze = true
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_left"]
-position = Vector2(20, 861)
-shape = SubResource("RectangleShape2D_8y12u")
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="WallLayer/wall_left"]
+position = Vector2(98, 810)
+polygon = PackedVector2Array(-58, 374, -98, 374, -98, -250, -68, -279, -58, -279)
 
 [node name="out_wall_left" type="RigidBody2D" parent="WallLayer"]
 physics_material_override = SubResource("PhysicsMaterial_xsem4")
@@ -132,14 +129,14 @@ metadata/_edit_group_ = true
 position = Vector2(-424, 432)
 shape = SubResource("RectangleShape2D_ppqvb")
 
-[node name="wall_right" type="RigidBody2D" parent="WallLayer" groups=["Walls"]]
+[node name="wall_right" type="RigidBody2D" parent="WallLayer" groups=["walls"]]
 position = Vector2(48, 0)
 physics_material_override = SubResource("PhysicsMaterial_xsem4")
 freeze = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLayer/wall_right"]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="WallLayer/wall_right"]
 position = Vector2(652, 861)
-shape = SubResource("RectangleShape2D_8y12u")
+polygon = PackedVector2Array(-20, -330, -20, 323, 20, 323, 20, -301, -10, -330)
 
 [node name="out_wall_right" type="StaticBody2D" parent="WallLayer"]
 

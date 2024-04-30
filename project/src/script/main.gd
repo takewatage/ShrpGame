@@ -102,12 +102,18 @@ func gameOver() -> void:
         $GameOverLayer/Anim.play("gameOverAnimation")
         $UILayer/PoseBtn.hide()
         $StrikeController.setControll(false)
+        hideWallDisabled()
         # アイテムを全部落とす
         get_tree().call_group("items", "jumpOut")
         
         if Common.update_hi_score:
             # ハイスコア更新
             UserSetting.set_value("hiscore", Common.hi_score)
+            
+## 壁の当たり判定削除        
+func hideWallDisabled():
+    get_tree().call_group("walls", 'queue_free')
+
 
 # ポーズ
 func _on_pose_btn_pressed() -> void:
